@@ -1,16 +1,16 @@
 # Create Security Group - SSH Traffic
 resource "aws_security_group" "vpc-ssh" {
-  name        = "vpc-ssh"
-  description = "Dev VPC SSH"
+  name        = "vpc-ssh-${var.Environment}"
+  description = "Dev VPC SSH for ${var.Environment}"
   ingress {
-    description = "Allow Port 22"
+    description = "Allow Port 22 for ${var.Environment}"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    description = "Allow all ip and ports outboun"
+    description = "Allow all ip and ports outbount for ${var.Environment}"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -20,8 +20,8 @@ resource "aws_security_group" "vpc-ssh" {
 
 # Create Security Group - Web Traffic
 resource "aws_security_group" "vpc-web" {
-  name        = "vpc-web"
-  description = "Dev VPC web"
+  name        = "vpc-web-${var.Environment}"
+  description = "Dev VPC web for ${var.Environment}"
   ingress {
     description = "Allow Port 80"
     from_port   = 80
@@ -38,7 +38,7 @@ resource "aws_security_group" "vpc-web" {
   }
 
   egress {
-    description = "Allow all ip and ports outbound"
+    description = "Allow all ip and ports outbound for ${var.Environment}"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
