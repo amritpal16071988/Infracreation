@@ -52,8 +52,7 @@
 	}
     stage('Openstack_tf_deployment') {
       steps {
-        withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY'),
-        string(credentialsId: 'deploy_tf_vm', variable: 'gitToken')]) {
+        withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
         sh ''' 
           cp -r /terraform_state_file/aws_binary/terraform .terraform
           cp /terraform_state_file/aws_binary/terraform.lock.hcl .terraform.lock.hcl        
