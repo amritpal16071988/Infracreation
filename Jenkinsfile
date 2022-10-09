@@ -26,7 +26,7 @@
       steps {
         withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
         sh '''
-          mkdir -p /terraform_state_file/$Environment/terraform.tfstate
+          mkdir -p /terraform_state_file/$Environment/
           if [ $(ls /terraform_state_file/$Environment/terraform.tfstate) -eq 1 ]
           then
             terraform plan -var Environment=$Environment -var aws_region=$aws_region -state=/terraform_state_file/$Environment/terraform.tfstate
