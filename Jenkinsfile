@@ -27,7 +27,7 @@
         withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
         sh '''
           mkdir -p /terraform_state_file/$Environment/
-          count=$(ls /terraform_state_file/$Environment/)
+          count=$(ls /terraform_state_file/$Environment/|wc -l)
           cp -r /terraform_state_file/aws_binary/terraform .terraform
           cp /terraform_state_file/aws_binary/terraform.lock.hcl .terraform.lock.hcl
           terraform init
