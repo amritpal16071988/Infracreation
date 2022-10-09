@@ -27,6 +27,9 @@
         withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
         sh '''
           mkdir -p /terraform_state_file/$Environment/
+          cp /terraform_state_file/aws_binary/terraform .terraform
+          cp /terraform_state_file/aws_binary/terraform.lock.hcl .terraform.lock.hcl
+          terraform init
           if [ $(ls /terraform_state_file/$Environment/) -eq 1 ]
           then
             terraform plan -var Environment=$Environment -var aws_region=$aws_region -state=/terraform_state_file/$Environment/terraform.tfstate
@@ -51,6 +54,9 @@
         withCredentials([usernamePassword(credentialsId: "$Credentials", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY'),
         string(credentialsId: 'deploy_tf_vm', variable: 'gitToken')]) {
         sh ''' 
+          cp /terraform_state_file/aws_binary/terraform .terraform
+          cp /terraform_state_file/aws_binary/terraform.lock.hcl .terraform.lock.hcl        
+          terraform init
           terraform apply -var Environment=$Environment -var aws_region=$aws_region -auto-approve -state=/terraform_state_file/$Environment/terraform.tfstate
         '''
         }
